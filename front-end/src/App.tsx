@@ -3,6 +3,7 @@ import { Navbar } from "./components/Navbar"
 import Home from "./pages/Home"
 import About from "./pages/About"
 import Dashboard from "./pages/Dashboard"
+import Player from "./pages/Player"
 
 
 const App = () =>{
@@ -16,7 +17,8 @@ const App = () =>{
                   <Route path="/" element={<Home/>}></Route>
                   <Route path="/about" element={<About/>}></Route>
                   <Route path="/dashboard" element={<Dashboard/>}></Route>
-              </Routes>
+                  <Route path="/player" element={<Player />}></Route>
+                </Routes>
               </div>
             </div>
           </div>
