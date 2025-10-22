@@ -1,9 +1,10 @@
 import { Router } from "express";
-import { addPlayer } from "../controller/playerController";
+import { createPlayer, getPlayer } from "../controller/playerController";
 
 
 const router = Router()
-router.post("/add", addPlayer)
+router.post("/addPlayer", createPlayer)
+router.get("/getPlayers", getPlayer)
 
 export default router
     

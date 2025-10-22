@@ -1,17 +1,19 @@
-import { Request, Response } from "express"
+import { NextFunction, Request, Response } from "express"
 import { Player } from "../modals/playerModel"
+import { error } from "console"
 
-export const addPlayer = async (req:Request, res:Response) =>{
-
+export const createPlayer = async (req:Request, res:Response, next:NextFunction) =>{
     try{
         const {name, age, country, main_role, batting, balling} = req.body
 
-        if(!name || !age || !country || !main_role || !balling || !batting ){
+        const existing = await Player.findOne({name, country})
+        if(existing){
             return res.status(400).json({
-                message:""
+                success: false,
+                data:null,
+                  message:"P layer All Ready Existing"
             })
         }
-
         const newPlayer = new Player({
             name,
             age,
@@ -20,15 +22,15 @@ export const addPlayer = async (req:Request, res:Response) =>{
             batting,
             balling
         })
-        const savedPlayer = await newPlayer.save()
+        await newPlayer.save();
         res.status(201).json({
-            message: "Player Added",
-            data: savedPlayer
+            success:true,
+            data: {player: newPlayer},
+            message: "Player Added Successfully"
         })
-    }catch(err){
-        console.error(err)
-        res.status(500).json({
-            message:""
-        })
+    }catch(error){
+        next(error)
     }
+    
 }
+
